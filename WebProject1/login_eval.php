@@ -5,8 +5,9 @@
     <title>Login</title>
     <link rel="stylesheet" type="text/css" href="format.css"></head>
 <body>
-<h1 id="title">Projektname</h1>
-<?php
+<div id="topBanner" class="box">
+    <h1 id="title">Projektname</h1>
+</div><?php
 include "functions.php";
 session_start();
 
@@ -35,7 +36,7 @@ if (checkPost('SUB', 'LOGIN')) {
 }
 ?>
 <p>
-    <a href="index.php">Zurück</a>
+    <a href="home.php">Zurück</a>
 </p>
 </body>
 </html>

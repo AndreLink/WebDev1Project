@@ -5,7 +5,9 @@
     <title>Login</title>
     <link rel="stylesheet" type="text/css" href="format.css"></head>
 <body>
-<h1 id="title">Projektname</h1>
+<div id="topBanner" class="box">
+    <h1 id="title">Projektname</h1>
+</div>
 <?php
 include "functions.php";
     session_start();

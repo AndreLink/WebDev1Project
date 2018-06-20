@@ -1,4 +1,4 @@
-    <table id="login">
+    <table id="login" class="box">
         <tr>
             <td>Angemeldet als:</td>
             <td><?php print($_SESSION['user']['name'])?></td>
