@@ -35,7 +35,7 @@ if (checkPost('SUB', 'LOGIN')) {
 }
 ?>
 <p>
-    <a href="..\index.php">Zurück</a>
+    <a href="index.php">Zurück</a>
 </p>
 </body>
 </html>
