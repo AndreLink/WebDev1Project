@@ -1,0 +1,21 @@
+#login {
+    background-color: gray;
+    font-size: 1.5em;
+    font-family: "NanumGothic", Arial, "Courier New", sans-serif;
+    text-align: right;
+    padding: 10px;
+    border: 2px black solid;
+    margin: auto;
+}
+
+#title {
+    font-size: 3em;
+    font-family: "NanumGothic", Arial, "Courier New", sans-serif;
+    text-align: center;
+}
+
+.button {
+    cursor: pointer;
+}
+
+body {background-color: darkolivegreen;}
