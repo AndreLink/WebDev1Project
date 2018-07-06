@@ -1,12 +1,14 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8" http-equiv="Refresh" content="0; url=home.php">
+    <meta charset="UTF-8">
     <title>Login</title>
     <link rel="stylesheet" type="text/css" href="format.css">
 </head>
 <body>
-<?php
+<div id="topBanner" class="box">
+    <h1 id="title">Projektname</h1>
+</div><?php
 include "functions.php";
 session_start();
 
@@ -20,17 +22,17 @@ if (isset($_POST['USR']) &&
     isset($_POST['PWW']) &&
     $_POST['PWD'] === $_POST['PWW']) {
     foreach ($accounts as $account) {
-        if (checkPost('USR', $account['name']) && checkPost('PWD', $account['pwd'])) {
-            $_SESSION['ERROR'] = 'Account existiert bereits';
+        if (checkPost('USR', $account['name'])) {
+            print("Account existiert bereits");
             $register = false;
         }
     }
     if ($register) {
         addNewAccount($_POST['USR'], $_POST['PWD'], $_POST['EML']);
-        $_SESSION['ERROR'] = 'Account erfolgreich angelegt!';
+        print("Account erfolgreich angelegt!");
     }
 } else {
-    $_SESSION['ERROR'] = 'Fehler bei der Accounterstellung';
+    print("Fehler bei der Accounterstellung");
 }
 ?>
 <p>

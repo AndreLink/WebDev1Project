@@ -1,13 +1,11 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
+    <meta charset="UTF-8" http-equiv="Refresh" content="0; url=home.php">
     <title>Login</title>
     <link rel="stylesheet" type="text/css" href="format.css"></head>
 <body>
-<div id="topBanner" class="box">
-    <h1 id="title">Projektname</h1>
-</div><?php
+<?php
 include "functions.php";
 session_start();
 
@@ -20,19 +18,18 @@ if (checkPost('SUB', 'LOGIN')) {
         if (checkPost('USR', $account['name']) && checkPost('PWD', $account['pwd'])) {
             $_SESSION['login'] = true;
             $_SESSION['user'] = $account;
-            print("Login erfolgreich");
+            $_SESSION['ERROR'] = 'Login erfolgreich';
             $login_fail = false;
         }
     }
     if ($login_fail) {
-        print("Falscher Benutzername oder falsches Kennwort");
+        $_SESSION['ERROR'] = 'Falscher Benutzername oder falsches Kennwort';
     }
 
 } else if (checkPost('SUB', 'LOGOUT')) {
     session_destroy();
-    print "Logout erfolgreich";
-} else if (checkPost('SUB', 'REGISTER')) {
-    include "register_form.html";
+    session_start();
+    $_SESSION['ERROR'] = 'Logout erfolgreich';
 }
 ?>
 <p>

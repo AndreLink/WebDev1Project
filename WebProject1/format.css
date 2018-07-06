@@ -1,31 +1,118 @@
-#login {
-    font-size: 1.5em;
-    text-align: right;
-    padding: 10px;
-    margin: revert;
+/* ALLGEMEIN */
+* {
+    padding: 0;
+    margin: 0;
+    font-family: "Consolas", "Menlo", "Courier", monospace;
+    box-sizing: border-box;
 }
 
-#title {
-    font-size: 3em;
-    font-family: ;
-    text-align: center;
-}
-
-#topBanner {
-
-}
-
-.box {
-    background-color: yellowgreen;
-    border-radius: 15px;
-    box-shadow:20px 20px 50px grey;
-    font-family: Calibri;
-}
-
-.button {
-    cursor: pointer;
+html {
+    font-size: 14px;
 }
 
 body {
-    background-color: white;
+    background-color: black;
+    color: white;
+}
+
+/* TITEL */
+.top_banner_flex {
+    display: flex;
+    height: 450px;
+    align-items: center;
+    justify-content: center;
+}
+
+.title_box {
+    background-color: #1d4b8f;
+    width: 500px;
+    height: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-style: outset;
+    border-radius: 10px;
+}
+
+.title {
+    font-size: 2rem;
+}
+
+/* BUTTONS */
+.button, .big_button {
+    cursor: pointer;
+    background-color: #1d4b8f;
+    border: none;
+    color: white;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    padding: 4px;
+    border-style: outset;
+    border-radius: 10px;
+
+}
+.button:hover, .big_button:hover{
+    background-color: #0000bf;
+}
+
+.button:active, .big_button:active{
+    border-style: inset;
+}
+
+.big_button {
+    width: 300px;
+    height: 100px;
+    font-size: 4rem;
+}
+
+/* PLAY BUTTON */
+.play_button_flex {
+    display: flex;
+    height: 300px;
+    align-items: center;
+    justify-content: center;
+}
+
+/* LOGIN */
+.login_manager_flex {
+    padding: 10px;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    align-content: center;
+    border-bottom-style: outset;
+    background-color: #1d4b8f;
+}
+
+/* REGISTER */
+.register_flex {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 400px;
+}
+
+.register_box {
+    padding: 10px;
+    background-color: #1d4b8f;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-style: outset;
+    border-radius: 10px;
+}
+
+/* GAME */
+#gameCanvas {
+    background-color: #00bfbf;
+
+}
+
+.game_flex {
+    padding: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
 }
