@@ -26,4 +26,9 @@ include "login_manager.php";
 	Click the game frame to start.<br>
 	</p>
 </div>
+<form id="game_data" action="game_over.php" method="post">
+    <input type="hidden" name="points" id="points" />
+    <input type="hidden" name="kills" id="kills" />
+    <input type="hidden" name="shoots" id="shoots" />
+</form>
 </body>

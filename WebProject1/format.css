@@ -16,39 +16,49 @@ body {
 }
 
 /* TITEL */
+.main_window_flex {
+    display: flex;
+    height: 800px;
+    justify-content: space-between;
+}
+
+.right_main {
+    width: 20%;
+}
+
+.left_main {
+    width: 80%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
 .top_banner_flex {
     display: flex;
     height: 450px;
-    align-items: center;
     justify-content: center;
 }
 
-.title_box {
-    background-color: #1d4b8f;
-    width: 500px;
-    height: 50px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    border-style: outset;
-    border-radius: 10px;
+/* SCOREBOARD */
+table {
+    border-collapse: collapse;
 }
 
-.title {
-    font-size: 2rem;
+th, td {
+    padding: 8px;
+    text-align: left;
 }
 
 /* BUTTONS */
 .button, .big_button {
     cursor: pointer;
     background-color: #1d4b8f;
-    border: none;
     color: white;
     text-align: center;
     text-decoration: none;
     display: inline-block;
     padding: 4px;
-    border-style: outset;
     border-radius: 10px;
 
 }
@@ -93,7 +103,7 @@ body {
     height: 400px;
 }
 
-.register_box {
+.register_box, .score_box {
     padding: 10px;
     background-color: #1d4b8f;
     display: flex;

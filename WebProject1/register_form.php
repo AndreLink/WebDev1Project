@@ -9,7 +9,7 @@
 <div class="register_flex">
     <div class="register_box">
         <form action="register_eval.php" method="post">
-            <table id="login" class="box">
+            <table>
                 <tr>
                     <td>Benutzername</td>
                     <td><input name="USR" type="text" size="15" maxlength="100" required="required"></td>

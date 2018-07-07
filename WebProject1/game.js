@@ -3,8 +3,8 @@ var c;
 
 var init = false;
 
-var kills = {generics:0, spiralers:0, gunners:0, splitters:0, hives:0, bullets:0, splitterlings:0, whirlers:0}
-var shots = {rifle:0, cannon:0, shotgun:0, smg:0, fountain:0}
+var kills = {generics:0, spiralers:0, gunners:0, splitters:0, hives:0, bullets:0, splitterlings:0, whirlers:0};
+var shots = {rifle:0, cannon:0, shotgun:0, smg:0, fountain:0};
 
 var timePassedMS;
 var tickInterval = 16;
@@ -688,7 +688,25 @@ function render()
 	c.strokeText("Time survived: " + timePassedMS/1000 + "s", 10, canvas.height-10);
 }
 
+// zählt alle kills zusammen
+function killsTotal()
+{
+    var result = 0;
+    for (var property in kills) {
+        if (kills.hasOwnProperty(property)) {
+            result += kills[property];
+        }
+    }
+    return result;
+}
 
+// schreibt die Spielergebnisse in hidden fields und submitted zum game over screen
+function submitResults()
+{
+    document.getElementById('points').value = timePassedMS;
+    document.getElementById('kills').value = killsTotal();
+    document.getElementById('game_data').submit();
+}
 
 //idk??
 function gameOver()
@@ -696,7 +714,9 @@ function gameOver()
 	console.log("you died!");
 	console.log({kills:kills, shots:shots, gameTime:timePassedMS});
 	init = false;
+	submitResults();
 }
+
 
 
 

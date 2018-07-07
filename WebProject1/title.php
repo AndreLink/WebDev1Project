@@ -1,7 +1,3 @@
 <div class="top_banner_flex">
-    <div class="title_box">
-        <div class="title">
-            <img src="soap.png" alt="Italian Trulli">
-        </div>
-    </div>
+            <img src="soap.png" alt="Soap_Title" width="70%" height="70%">
 </div>
