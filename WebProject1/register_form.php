@@ -26,8 +26,8 @@
                     <td>Passwort wiederholen</td>
                     <td><input name="PWW" type="password" size="15" maxlength="100" required="required"></td>
                 </tr>
-                <td></td>
-                <td><input class="button" name="SUB" type="submit" value="REGISTER"></td>
+                <tr>
+                    <td><input class="button" name="SUB" type="submit" value="REGISTER"></td>
                 </tr>
             </table>
         </form>

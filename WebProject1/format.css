@@ -77,7 +77,7 @@ th, td {
 }
 
 /* PLAY BUTTON */
-.play_button_flex {
+.game_over_button_flex {
     display: flex;
     height: 300px;
     align-items: center;
@@ -103,7 +103,7 @@ th, td {
     height: 400px;
 }
 
-.register_box, .score_box {
+.register_box, .score_box, .latest_games_box{
     padding: 10px;
     background-color: #1d4b8f;
     display: flex;
@@ -113,9 +113,15 @@ th, td {
     border-radius: 10px;
 }
 
+/* PROFILE */
+.profile_flex {
+    display: flex;
+    justify-content: space-around;
+}
+
 /* GAME */
 #gameCanvas {
-    background-color: #00bfbf;
+    background-color: white;
 
 }
 
@@ -125,4 +131,11 @@ th, td {
     align-items: center;
     justify-content: center;
     flex-direction: column;
+}
+
+.game_over_flex {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
 }

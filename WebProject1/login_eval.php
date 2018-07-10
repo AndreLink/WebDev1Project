@@ -9,23 +9,12 @@
 include "functions.php";
 session_start();
 
-// liest accounts aus accounts.txt ein
-$accounts = readAccounts();
-
 if (checkPost('SUB', 'LOGIN')) {
-    $login_fail = true;
-    foreach ($accounts as $account) {
-        if (checkPost('USR', $account['name']) && checkPost('PWD', $account['pwd'])) {
-            $_SESSION['login'] = true;
-            $_SESSION['user'] = $account;
-            $_SESSION['ERROR'] = 'Login erfolgreich';
-            $login_fail = false;
-        }
+    if(isset($_POST['USR']) && isset($_POST['PWD'])) {
+        login($_POST['USR'], $_POST['PWD']);
+    } else {
+        $_SESSION['ERROR'] = 'Benutzername oder Passwort fehlt';
     }
-    if ($login_fail) {
-        $_SESSION['ERROR'] = 'Falscher Benutzername oder falsches Kennwort';
-    }
-
 } else if (checkPost('SUB', 'LOGOUT')) {
     session_destroy();
     session_start();

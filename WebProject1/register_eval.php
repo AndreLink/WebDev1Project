@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8" http-equiv="Refresh" content="0; url=home.php">
-    <title>Login</title>
+    <title>Register</title>
     <link rel="stylesheet" type="text/css" href="format.css">
 </head>
 <body>
@@ -11,7 +11,7 @@ include "functions.php";
 session_start();
 
 // liest accounts aus accounts.txt ein
-$accounts = readAccounts();
+$accounts = load_accounts();
 
 $register = true;
 if (isset($_POST['USR']) &&
@@ -26,7 +26,9 @@ if (isset($_POST['USR']) &&
         }
     }
     if ($register) {
-        addNewAccount($_POST['USR'], $_POST['PWD'], $_POST['EML']);
+        add_new_account($_POST['USR'], $_POST['PWD'], $_POST['EML']);
+        $_SESSION['login'] = true;
+        login($_POST['USR'], $_POST['PWD']);
         $_SESSION['ERROR'] = 'Account erfolgreich angelegt!';
     }
 } else {

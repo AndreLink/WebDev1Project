@@ -4,17 +4,16 @@
             <tr>
             <th>Rank</th>
             <th>Name</th>
-            <th>Punkte</th>
+            <th>Time</th>
             <th>Kills</th>
             </tr>
             <?php
             $max_entries = 20;
-            $games = createScoreBoard();
+            $games = create_sorted_game_list();
             $size = count($games);
-            $board_size = min($size, $max_entries);
             for ($i = 0; $i < $max_entries; $i++) {
-                if ($i<$board_size) {
-                    echo "<tr><td>" . ($i + 1) . "</td><td>" . $games[$i]['name'] . "</td><td>" . $games[$i]['points'] . "</td><td>" . $games[$i]['kills'] . "</td></tr>";
+                if ($i<$size) {
+                    echo "<tr><td>" . ($i + 1) . "</td><td>" . $games[$i]['name'] . "</td><td>" . $games[$i]['time']*0.001 . "s </td><td>" . $games[$i]['kills'] . "</td></tr>";
                 } else {
                     echo "<tr><td>" . ($i + 1) . "</td><td> -- </td><td> -- </td><td> -- </td></tr>";
                 }

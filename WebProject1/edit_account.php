@@ -1,14 +1,3 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Login</title>
-    <link rel="stylesheet" type="text/css" href="format.css"></head>
-<body>
-
-<?php
-    session_start();
-?>
 <div class="register_flex">
     <div class="register_box">
         <form action="edit_eval.php" method="post">
