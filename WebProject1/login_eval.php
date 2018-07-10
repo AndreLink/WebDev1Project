@@ -16,8 +16,7 @@ if (checkPost('SUB', 'LOGIN')) {
         $_SESSION['ERROR'] = 'Benutzername oder Passwort fehlt';
     }
 } else if (checkPost('SUB', 'LOGOUT')) {
-    session_destroy();
-    session_start();
+    $_SESSION['login'] = false;
     $_SESSION['ERROR'] = 'Logout erfolgreich';
 }
 ?>
