@@ -1,3 +1,4 @@
+<?php session_start(); ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -7,7 +8,6 @@
 <body>
 <?php
 include "functions.php";
-session_start();
 
 if (checkPost('SUB', 'LOGIN')) {
     if(isset($_POST['USR']) && isset($_POST['PWD'])) {

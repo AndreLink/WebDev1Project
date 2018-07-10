@@ -1,3 +1,4 @@
+<?php session_start(); ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -8,7 +9,6 @@
 <body>
 <?php
 include "functions.php";
-session_start();
 
 $accounts = load_accounts();
 
