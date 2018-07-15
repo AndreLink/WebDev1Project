@@ -42,6 +42,11 @@ function add_game_results($id, $name, $time, $kills)
     // file name
     $file = "games.txt";
 
+    // check if the time is possible to achieve or if the player cheated
+    if($time % 16 !== 1) {
+        return -2;
+    }
+
     // check if game was already added
     $games = load_games();
     foreach ($games as $game) {
@@ -87,7 +92,7 @@ function create_sorted_game_list()
 
     // sort games
     usort($games, function($a, $b) {
-        return $a['time'] <=> $b['time'];
+        return $b['time'] <=> $a['time'];
     });
 
     // return result

@@ -22,7 +22,9 @@
         if (isset($_POST['game_id']) &&
             isset($_POST['time']) &&
             isset($_POST['kills'])) {
-            add_game_results( $_POST['game_id'], $_SESSION['user']['name'], $_POST['time'], $_POST['kills']);
+            if (add_game_results( $_POST['game_id'], $_SESSION['user']['name'], $_POST['time'], $_POST['kills']) == -2) {
+                $_SESSION['ERROR'] = 'Nice try...';
+            }
         }
     }
     ?>

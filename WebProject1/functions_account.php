@@ -1,4 +1,20 @@
 <?php
+function login($usr, $pwd)
+{
+    $accounts = load_accounts();
+    $login_fail = true;
+    foreach ($accounts as $account) {
+        if ($usr === $account['name'] && password_verify($pwd, $account['pwd'])) {
+            $_SESSION['login'] = true;
+            $_SESSION['user'] = $account;
+            $_SESSION['ERROR'] = 'Login erfolgreich';
+            $login_fail = false;
+        }
+    }
+    if ($login_fail) {
+        $_SESSION['ERROR'] = 'Falscher Benutzername oder falsches Kennwort';
+    }
+}
 
 function load_accounts()
 {
@@ -42,6 +58,10 @@ function add_new_account($name, $password, $email)
     // file name
     $file = "accounts.txt";
 
+    if(ctype_alnum($name) === false) {
+        return -2;
+    }
+
     // check already existing accounts for same name
     $accounts = load_accounts();
     foreach ($accounts as $account) {
@@ -54,9 +74,12 @@ function add_new_account($name, $password, $email)
     // create id
     $id = rand()%10000;
 
+    // hash password
+    $pw_hash = password_hash($password, PASSWORD_DEFAULT);
+
     // add account to file
     $file_handle = fopen($file, "a");
-    $entry = trim($id . "@@@" . $name . "@@@" . $password . "@@@" . $email) . "\n";
+    $entry = trim($id . "@@@" . $name . "@@@" . $pw_hash . "@@@" . $email) . "\n";
     fputs($file_handle, $entry);
     fclose($file_handle);
 
@@ -71,7 +94,7 @@ function update_accounts($id, $name, $password, $email)
 
     // check if anything changed
     if ($_SESSION['user']['name'] === $name &&
-        $_SESSION['user']['pwd'] === $password &&
+        password_verify($password, $_SESSION['user']['pwd']) &&
         $_SESSION['user']['email'] === $email ) {
         return -2;
     }
@@ -88,7 +111,7 @@ function update_accounts($id, $name, $password, $email)
     foreach ($accounts as &$account) {
         if ($account['id'] === $id) {
             $account['name'] = $name;
-            $account['pwd'] = $password;
+            $account['pwd'] = password_hash($password, PASSWORD_DEFAULT);
             $account['email'] = $email;
             $_SESSION['user'] = $account;
         }

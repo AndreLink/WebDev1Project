@@ -26,19 +26,21 @@ let gunText = "";
 let refreshIntervalID;
 
 let titlePullPointsX = 23;
-let titlePullPointsY = 8;
-let titlePullPoints = [
-    0,1,1,1,0,0,0,1,1,1,0,0,0,1,1,1,0,0,1,1,1,1,0,
-    1,0,0,0,1,0,1,0,0,0,1,0,1,0,0,0,1,0,1,0,0,0,1,
+let titlePullPointsY = 7;
+let titlePullPoints = [	0,1,1,1,0,0,0,1,1,1,0,0,0,0,1,0,0,0,1,1,1,1,0,
+    1,0,0,0,1,0,1,0,0,0,1,0,0,1,0,1,0,0,1,0,0,0,1,
     1,0,0,0,0,0,1,0,0,0,1,0,1,0,0,0,1,0,1,0,0,0,1,
     0,1,1,1,0,0,1,0,0,0,1,0,1,1,1,1,1,0,1,1,1,1,0,
     0,0,0,0,1,0,1,0,0,0,1,0,1,0,0,0,1,0,1,0,0,0,0,
     1,0,0,0,1,0,1,0,0,0,1,0,1,0,0,0,1,0,1,0,0,0,0,
     0,1,1,1,0,0,0,1,1,1,0,0,1,0,0,0,1,0,1,0,0,0,0,]
+var pullStrength = 1;
 
 let pause = false;
 
 let firingCooldown = 0;
+
+let tuem;
 
 let player = {
     x:256,
@@ -81,7 +83,7 @@ function launch()
     //start the game loop
     window.clearInterval(refreshIntervalID);
     refreshIntervalID = window.setInterval(tick, tickInterval);
-    timePassedMS = 0;
+    timePassedMS = 1;
 
     player.x = canvas.width/2;
     player.y = canvas.height/2;
@@ -92,7 +94,8 @@ function launch()
     player.x = canvas.width/2;
     player.y = canvas.height/2;
     c.moveTo(256, 256);
-};
+    tuem = 1945;
+}
 
 //draws the title screen
 function drawSoap()
@@ -187,6 +190,7 @@ function mouseDownListener(e)
 //changes the gun
 function selectGun(g)
 {
+    if(gun === g) return;
     prevGun = gun;
     gun = g;
     if(g === 1) gunText = "Weapon: Rifle (1)";
@@ -206,39 +210,42 @@ function swapGun()
 
 
 //makes the player use his weapon
-//direction: 0=up, 1=left, 2=down, 3=right
 //mode:
 //0,1 = regular
 //2 = big shot
 //3 = shotgun
 //4 = minigun
 //5 = fountain
-function shoot(direction, mode)
+function shoot(mode, r, l, d, u)
 {
     if(firingCooldown > 0) return;
 
     let x = 0;
     let y = 0;
 
-    if( direction === 1 ) x=-1;
-    if( direction === 0 ) y=-1;
-    if( direction === 3 ) x=1;
-    if( direction === 2 ) y=1;
+    if( r ) x += 1;
+    if( l ) x -= 1;
+    if( d ) y += 1;
+    if( u ) y -= 1;
+
+    if(x === 0 && y === 0) return;
+
+    if(x !== 0 && y !== 0) {x *= 0.7; y*= 0.7;}
 
     //rifle
-    //DPS: 60
+    //DPS: 90
     if(mode === 0 || mode === 1)
     {
-        shootBullet(x,y,10,480);
-        firingCooldown = 10;
+        shootBullet(x,y,12,480);
+        firingCooldown = 8;
         shots.rifle++;
     }
     //cannon
-    //DPS: 83
+    //DPS: 100
     if(mode === 2)
     {
-        shootBullet(x,y,50,200);
-        firingCooldown = 36;
+        shootBullet(x,y,50,240);
+        firingCooldown = 30;
         shots.cannon++;
     }
     //shotgun; generates 8 random angles between -0,35 and 0.35 radians
@@ -253,23 +260,23 @@ function shoot(direction, mode)
         firingCooldown = 22;
         shots.shotgun += 8;
     }
-    //smg; adds random letiation to projectile speed
-    //DPS: 90
+    //smg; adds random spread to projectile speed
+    //DPS: 105
     if(mode === 4)
     {
         let dx = 0.1 - 0.2 * Math.random()
         let dy = 0.1 - 0.2 * Math.random()
-        shootBullet(x + dx, y + dy, 1.5,960);
+        shootBullet(x + dx, y + dy, 1.75,960);
         firingCooldown = 1;
         shots.smg++;
     }
     //fountain, sprays stuff all over the place, but mainly in the front
     //note: player speed is halved during usage
-    //DPS: 150
+    //DPS: 120
     if(mode === 5)
     {
         let angle = Math.PI - Math.PI * ((Math.random()+Math.random()+Math.random()+Math.random()))/2;
-        shootBullet(x * Math.cos(angle) - y * Math.sin(angle), x * Math.sin(angle) + y * Math.cos(angle), 5,720);
+        shootBullet(x * Math.cos(angle) - y * Math.sin(angle), x * Math.sin(angle) + y * Math.cos(angle), 4,720);
         firingCooldown = 2;
         shots.fountain++;
     }
@@ -336,12 +343,27 @@ function tick()
     timePassedMS += tickInterval;
     if(firingCooldown > 0)firingCooldown--;
 
+    //magic
+    secure();
+
     //player movement, firing, bullet movement
     playerActions();
 
     //make enemies do stuff
     enemyLogic();
 };
+
+//dont touch
+function secure()
+{
+    tuem += tickInterval;
+
+    if( tuem - timePassedMS !== 1944)
+    {
+        timePassedMS = -1;
+        gameOver();
+    }
+}
 
 //title screen loop
 function tickPassive()
@@ -351,6 +373,8 @@ function tickPassive()
 
     //draw "soap"
     enemiesFormation();
+
+    if(pullStrength > 0.05) pullStrength -= 0.001;
 
     //render
     renderGame();
@@ -622,12 +646,10 @@ function enemyEnemy()
 //manages the player actions (movement, firing)
 function playerActions()
 {
-    let gunSpeedFactor = 1;
-    if(gun === 5) gunSpeedFactor = 0.5;
-    if(keyIsPressed['a'.charCodeAt(0)]) player.x -= player.speed/fps * gunSpeedFactor;
-    if(keyIsPressed['d'.charCodeAt(0)]) player.x += player.speed/fps * gunSpeedFactor;
-    if(keyIsPressed['w'.charCodeAt(0)]) player.y -= player.speed/fps * gunSpeedFactor;
-    if(keyIsPressed['s'.charCodeAt(0)]) player.y += player.speed/fps * gunSpeedFactor;
+    if(keyIsPressed['a'.charCodeAt(0)]) player.x -= player.speed/fps;
+    if(keyIsPressed['d'.charCodeAt(0)]) player.x += player.speed/fps;
+    if(keyIsPressed['w'.charCodeAt(0)]) player.y -= player.speed/fps;
+    if(keyIsPressed['s'.charCodeAt(0)]) player.y += player.speed/fps;
 
     if(player.x < 0) player.x = 0;
     if(player.y < 0) player.y = 0;
@@ -635,10 +657,11 @@ function playerActions()
     if(player.y > canvas.height) player.y = canvas.height;
 
     //player weapons
-    if(arrowKeyIsPressed.up) shoot(0,gun);
+    shoot(gun, arrowKeyIsPressed.right, arrowKeyIsPressed.left, arrowKeyIsPressed.down, arrowKeyIsPressed.up);
+    /*if(arrowKeyIsPressed.up) shoot(0,gun);
     if(arrowKeyIsPressed.left) shoot(1,gun);
     if(arrowKeyIsPressed.down) shoot(2,gun);
-    if(arrowKeyIsPressed.right) shoot(3,gun);
+    if(arrowKeyIsPressed.right) shoot(3,gun);*/
     /*
     keep this?
     if(keyIsPressed['i'.charCodeAt(0)]) shoot(0,gun);
@@ -679,8 +702,8 @@ function enemiesFormation()
                         let dy = y-enemies[a].y;
                         let d = Math.sqrt(dx*dx + dy*dy);
 
-                        let force = Math.pow(d,-2) * 1000;
-                        if(force > 10) force = 10;
+                        let force = Math.pow(d,-2) * 1000 * pullStrength;
+                        if(force > 1) force = 1;
                         if(force > d) force = d;
 
                         enemies[a].x += force * (dx/d);
@@ -945,7 +968,8 @@ function killsTotal()
 }
 
 // schreibt die Spielergebnisse in hidden fields und submitted zum game over screen
-function submitResults() {
+function submitResults()
+{
     document.getElementById('time').value = timePassedMS;
     document.getElementById('kills').value = killsTotal();
     document.getElementById('game_id').value = Math.floor(Math.random() * 100000).toString();
@@ -953,9 +977,10 @@ function submitResults() {
 }
 
 //idk??
-function gameOver() {
+function gameOver()
+{
     console.log("you died!");
-    console.log({kills: kills, shots: shots, gameTime: timePassedMS});
+    console.log({kills:kills, shots:shots, gameTime:timePassedMS});
     init = false;
     submitResults();
 }
