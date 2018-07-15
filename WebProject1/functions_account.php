@@ -58,8 +58,9 @@ function add_new_account($name, $password, $email)
     // file name
     $file = "accounts.txt";
 
+    // check if name is allowed
     if(ctype_alnum($name) === false) {
-        return -2;
+        return -3;
     }
 
     // check already existing accounts for same name
@@ -91,6 +92,11 @@ function update_accounts($id, $name, $password, $email)
 {
     // read account file into array
     $accounts = load_accounts();
+
+    // check if name is allowed
+    if(ctype_alnum($name) === false) {
+        return -3;
+    }
 
     // check if anything changed
     if ($_SESSION['user']['name'] === $name &&

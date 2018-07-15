@@ -2,7 +2,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8" http-equiv="Refresh" content="0; url=home.php">
+    <meta charset="UTF-8" http-equiv="Refresh" content="0; url=index.php">
     <title>Edit</title>
     <link rel="stylesheet" type="text/css" href="format.css">
 </head>
@@ -32,7 +32,7 @@ if (isset($_POST['USR']) &&
 }
 ?>
 <p>
-    <a href="home.php">Zurück</a>
+    <a href="index.php">Zurück</a>
 </p>
 </body>
 </html>

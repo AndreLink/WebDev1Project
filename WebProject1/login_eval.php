@@ -2,7 +2,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8" http-equiv="Refresh" content="0; url=home.php">
+    <meta charset="UTF-8" http-equiv="Refresh" content="0; url=index.php">
     <title>Login</title>
     <link rel="stylesheet" type="text/css" href="format.css"></head>
 <body>
@@ -21,7 +21,7 @@ if (checkPost('SUB', 'LOGIN')) {
 }
 ?>
 <p>
-    <a href="home.php">Zurück</a>
+    <a href="index.php">Zurück</a>
 </p>
 </body>
 </html>

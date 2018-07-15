@@ -29,7 +29,7 @@
     }
     ?>
     <div class="game_over_button_flex">
-        <form action="home.php" method="get">
+        <form action="index.php" method="get">
             <input class="big_button" name="SUB" type="submit" value="Back">
         </form>
     </div>
