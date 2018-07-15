@@ -59,15 +59,15 @@ th, td {
     text-decoration: none;
     display: inline-block;
     padding: 4px;
-    border-radius: 10px;
-
+    border: none;
 }
+
 .button:hover, .big_button:hover{
     background-color: #0000bf;
 }
 
 .button:active, .big_button:active{
-    border-style: inset;
+    /* border-style: inset; */
 }
 
 .big_button {
@@ -109,8 +109,7 @@ th, td {
     display: flex;
     justify-content: center;
     align-items: center;
-    border-style: solid;
-    border-radius: 10px;
+    /* border-style: solid; */
 }
 
 /* PROFILE */
