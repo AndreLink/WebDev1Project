@@ -13,8 +13,8 @@ let fps = 1000/tickInterval;
 
 let hue = 0;
 
-let mouseX;
-let mouseY;
+let mouseX = 0;
+let mouseY = 0;
 
 let keyIsPressed = new Array(256);
 let arrowKeyIsPressed = {up:false, left:false, right:false, down:false}
@@ -49,7 +49,9 @@ let player = {
     vy:0,
     size:8,
     speed:160,
-    color:'#262626'
+    //color:'#262626'
+    color: 'black',
+    shade:'white'
 };
 
 let bulletsMax = 128;
@@ -104,12 +106,14 @@ function drawSoap()
     canvas = document.getElementById("gameCanvas");
     c = canvas.getContext("2d");
 
-    //send the player to hell so he wont annoy us
-    player.x = 1000000;
-    player.y = 1000000;
+    //get some mouse listeners
+    canvas.onmousemove = mouseMoveListener;
 
     let titleMax = canvas.width * canvas.height / 3000;
     if(titleMax > enemiesMax) titleMax = enemiesMax;
+
+    player.x=canvas.width * 0.98;
+    player.y=canvas.height * 0.98;
 
     for(let i = 0; i < titleMax; i += 15)
     {
@@ -119,6 +123,10 @@ function drawSoap()
         newEnemy(4,0.5);
         newEnemy(5,0.5);
     }
+
+    //send the player to hell so he wont annoy us
+    player.x = 1000000;
+    player.y = 1000000;
 
     refreshIntervalID = window.setInterval(tickPassive, tickInterval);
 
@@ -314,7 +322,9 @@ function shootBullet(x,y,size,speed)
         vx:vx,
         vy:vy,
         size:size,
-        color:'#884411'
+        //color:'#884411'
+        color:player.color,
+        shade:player.shade
     };
 
     //try to find an empty position in the bullet array
@@ -374,7 +384,10 @@ function tickPassive()
     //draw "soap"
     enemiesFormation();
 
-    if(pullStrength > 0.05) pullStrength -= 0.001;
+    //shoo away from cursor because why not
+    enemiesMouse();
+
+    //if(pullStrength > 0.2) pullStrength -= 0.001;
 
     //render
     renderGame();
@@ -633,10 +646,10 @@ function enemyEnemy()
 
                 if(d < r)
                 {
-                    enemies[a].x += dx/(d* 5) * err / enemies[a].size;
-                    enemies[a].y += dy/(d* 5) * err / enemies[a].size;
-                    enemies[b].x -= dx/(d* 5) * err / enemies[b].size;
-                    enemies[b].y -= dy/(d* 5) * err / enemies[b].size;
+                    enemies[a].x += Math.min(5,dx/(d* 5) * err / enemies[a].size);
+                    enemies[a].y += Math.min(5,dy/(d* 5) * err / enemies[a].size);
+                    enemies[b].x -= Math.min(5,dx/(d* 5) * err / enemies[b].size);
+                    enemies[b].y -= Math.min(5,dy/(d* 5) * err / enemies[b].size);
                 }
             }
         }
@@ -714,6 +727,27 @@ function enemiesFormation()
         }}
 }
 
+
+//makes enemies scared of the cursor
+
+function enemiesMouse()
+{
+    for(let a=0;a<enemiesMax;a++)
+    {
+        if(enemies[a] != null){
+            let dx = enemies[a].x - mouseX;
+            let dy = enemies[a].y - mouseY;
+            let d = Math.sqrt(dx*dx + dy*dy);
+
+            let force = Math.pow(d,-2) * 1000 * 4;
+            if(force > 10) force = 10;
+            if(force > d) force = d;
+
+            enemies[a].x += force * (dx/d);
+            enemies[a].y += force * (dy/d);
+        }
+    }
+}
 
 //manages the creation of enemies
 function enemySpawning()
@@ -887,11 +921,22 @@ function enemyShoot(e, size, spread)
 //draws the circle that represents an entity
 function drawObject(e)
 {
-    c.strokeStyle = e.color;
-    c.lineWidth = 3;
-    c.beginPath();
-    c.arc(e.x,e.y,radius(e),0,2*Math.PI);
-    c.stroke();
+    let linewidth = 5;
+    if(e == null) return;
+    if(e.shade != null){
+        c.fillStyle = e.shade;
+        c.lineWidth = linewidth;
+        c.beginPath();
+        c.arc(e.x,e.y,radius(e),0,2*Math.PI);
+        c.fill();
+    }
+    if(e.color != null){
+        c.strokeStyle = e.color;
+        c.lineWidth = linewidth;
+        c.beginPath();
+        c.arc(e.x,e.y,radius(e),0,2*Math.PI);
+        c.stroke();
+    }
 }
 
 
@@ -920,11 +965,9 @@ function render()
 function renderGame()
 {
     c.clearRect(0,0,canvas.width,canvas.height);
-    c.fillStyle = "black";
+    c.fillStyle = "white";
     if(pause) c.fillStyle = "#001010";
     c.fillRect(0,0,canvas.width,canvas.height);
-
-    drawObject(player);
 
     for(let i = 0; i<bulletsMax; i++){
         if(bullets[i] != null){
@@ -937,6 +980,8 @@ function renderGame()
             drawObject(enemies[i]);
         }
     }
+
+    drawObject(player);
 }
 
 //draws the hud

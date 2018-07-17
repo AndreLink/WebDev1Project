@@ -1,6 +1,5 @@
-<form action="login_eval.php" method="post">
-    <div class="login_manager_flex">
-        <?php
+<form class="login_manager_flex" action="login_eval.php" method="post">
+     <?php
         include "functions.php";
         if (checkSession('login', true)) {
             include "logged_in_as_form.php";
@@ -8,5 +7,4 @@
             include "login_form.html";
         }
         ?>
-    </div>
 </form>
